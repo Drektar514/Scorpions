@@ -1,0 +1,26 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Hospital__HomeWork4_
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int peopleInLine;
+            int reseptionTime = 5;
+            int waitingTime;
+            int hour;
+            int min;
+            Console.Write("Введите количество человек в очереди: ");
+            peopleInLine = Convert.ToInt32(Console.ReadLine());
+            waitingTime = peopleInLine * reseptionTime;
+            hour = waitingTime / 60;
+            min = waitingTime % 60;
+            Console.Write($"Здравствуйте, перед вами стоит ещё {peopleInLine} человек, время вашего ожидания {hour} часов, {min} минут");
+        }
+    }
+}
