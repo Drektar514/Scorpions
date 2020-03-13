@@ -4,21 +4,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Arts__HomeWork2_
+namespace HomeWork_1
 {
     class Program
     {
+    
+
         static void Main(string[] args)
         {
-            int pictures = 52;
-            int picturesInRow = 3;
 
-            int rowCount = 52 / 3;
-            int picturesOverRow = 52 % 3;
-
-            Console.WriteLine("Количество рядов: " + rowCount);
-            Console.WriteLine("Картинок сверх меры: " + picturesOverRow);
+            byte firstVariable;
+            float temperature = 35.5f;
+            char sos = 'S';
+            bool pizzaMaking = true;
+            bool cutVegetables = false;
+            string myName = "Sergey";
+            long Ants = 100000000000000;
+            double gravity = 6.672d;
+            int potatoNumber = 25;
+            short channelCounter = 99;
+            Console.WriteLine(channelCounter);
             Console.ReadKey();
         }
+
+     
     }
+        
 }
+
