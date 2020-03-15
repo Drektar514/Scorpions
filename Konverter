@@ -1,0 +1,138 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Converter
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            float userRub;
+            float userUsd;
+            float userEur;
+            int rubToUsd = 80, rubToEur = 90;
+            int usdToRub = 75, usdToEur = 10;
+            int eurToRub = 85, eurToUsd = 8;
+            float currensyCount;
+            string userInput;
+            Console.WriteLine("Добро пожаловать в банк, у нас вы можете поменять валюту");
+            Console.WriteLine("Введите количество ваших рублей: ");
+            userRub = Convert.ToSingle(Console.ReadLine());
+            Console.WriteLine("Введите количество ваших долларов: ");
+            userUsd = Convert.ToSingle(Console.ReadLine());
+            Console.WriteLine("Введите количество ваших евро: ");
+            userEur = Convert.ToSingle(Console.ReadLine());
+            bool work = true;
+            while(work == true)
+            {
+                Console.WriteLine("Что вы хотели бы поменять: ");
+                Console.WriteLine("1 обменять рубли на доллары, 2 обменять рубли на евро");
+                Console.WriteLine("3 обменять доллары на рубли, 4 обменять доллары на евро");
+                Console.WriteLine("5 обменять евро на рубли, 6 обменять евро на доллары");
+                userInput = Console.ReadLine();
+                switch (userInput)
+                {
+                    case "1":
+                        Console.WriteLine("Обмен рублей в доллары");
+                        Console.Write("Сколько рублей вы хотите обменять: ");
+                        currensyCount = Convert.ToSingle(Console.ReadLine());
+                        if (userRub >= currensyCount)
+                        {
+                            userRub -= currensyCount;
+                            userUsd += currensyCount / rubToUsd;
+                        }
+                        else
+                        {
+                            Console.WriteLine("На вашем счету не хватает рублей!");
+                        }
+                        break;
+                    case "2":
+                        Console.WriteLine("Обмен рублей в евро");
+                        Console.Write("Сколько рублей вы хотите обменять: ");
+                        currensyCount = Convert.ToSingle(Console.ReadLine());
+                        if (userRub >= currensyCount)
+                        {
+                            userRub -= currensyCount;
+                            userEur += currensyCount / rubToEur;
+                        }
+                        else
+                        {
+                            Console.WriteLine("На вашем счету не хватает рублей!");
+                        }
+                        break;
+                    case "3":
+                        Console.WriteLine("Обмен долларов в рубли");
+                        Console.Write("Сколько долларов вы хотите обменять: ");
+                        currensyCount = Convert.ToSingle(Console.ReadLine());
+                        if(userUsd >= currensyCount)
+                        {
+                            userUsd -= currensyCount;
+                            userRub += currensyCount * usdToRub;
+                        }
+                        else
+                        {
+                            Console.WriteLine("На вашем счету не хватает долларов!");
+                        }
+                        break;
+                    case "4":
+                        Console.WriteLine("Обмен долларов в евро");
+                        Console.Write("Сколько долларов вы хотите обменять: ");
+                        currensyCount = Convert.ToSingle(Console.ReadLine());
+                        if (userUsd >= currensyCount)
+                        {
+                            userUsd -= currensyCount;
+                            userEur += currensyCount / usdToEur;
+                        }
+                        else
+                        {
+                            Console.WriteLine("На вашем счету не хватает долларов!");
+                        }
+                        break;
+                    case "5":
+                        Console.WriteLine("Обмен евро в рубли");
+                        Console.Write("Сколько евро вы хотите обменять: ");
+                        currensyCount = Convert.ToSingle(Console.ReadLine());
+                        if (userEur >= currensyCount)
+                        {
+                            userEur -= currensyCount;
+                            userRub += currensyCount * eurToRub;
+                        }
+                        else
+                        {
+                            Console.WriteLine("На вашем счету не хватает евро!");
+                        }
+                        break;
+                    case "6":
+                        Console.WriteLine("Обмен евро в доллары");
+                        Console.Write("Сколько евро вы хотите обменять: ");
+                        currensyCount = Convert.ToSingle(Console.ReadLine());
+                        if (userEur >= currensyCount)
+                        {
+                            userEur -= currensyCount;
+                            userUsd += currensyCount * eurToUsd;
+                        }
+                        else
+                        {
+                            Console.WriteLine("На вашем счету не хватает евро!");
+                        }
+                        break;
+                    default:
+                        Console.WriteLine("Введено неопределяемое значение!");
+                        break;
+                }
+                Console.WriteLine($"Ваш баланс составляет {userRub} рублей, {userUsd} долларов и {userEur} евро");
+                Console.Write("Для выхода из приложения введите - нет. Хотите продолжить: ");
+                userInput = Console.ReadLine();
+                if(userInput == "нет")
+                {
+                    Console.WriteLine("До новых встреч!");
+                    break;
+                }
+
+            }
+        }
+    }
+}
