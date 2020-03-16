@@ -1,0 +1,89 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BossFight
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Random rand = new Random();
+            int ninjaHealth = 100;
+            int ninjaDamage;
+            bool shadowClone = false;
+            int evasionCount = 3;
+            int samuraiHealth = rand.Next(100,201);
+            int samuraiDamage = rand.Next(5,21);
+            int playerInput;
+            Console.WriteLine("Вы ниндзя, и вы должны победить самурая");
+            Console.WriteLine("Да начнётся же ваша битва");
+            while (ninjaHealth > 0 && samuraiHealth > 0)
+            {
+                Console.WriteLine("Ваши умения:\n1 - Призыв клона: нанести самураю 10 урона, призвать теневого клона,");
+                Console.WriteLine("2 - Атака клона: если имеется теневой клон, нанести самураю 20 урона, без теневого клона самурай нанесёт вам двойной урон");
+                Console.WriteLine("3 - Уклонение: тратиться 1 заряд и восстанавливает 10 жизней, осталось "+ evasionCount + " уклонений");
+                Console.WriteLine("4 - Гневный удар: нанести 15 урона, при этом лешиться 15 жизней");
+                Console.WriteLine($"У ниндзя осталось {ninjaHealth} жизней, у самурая осталось {samuraiHealth} жизней");
+                Console.Write("Ваш выбор: ");
+                playerInput = Convert.ToInt32(Console.ReadLine());
+                switch (playerInput)
+                {
+                    case 1:
+                        Console.WriteLine("Призыв клона!");
+                        shadowClone = true;
+                        samuraiHealth -= 7;
+                        ninjaHealth -= samuraiDamage;
+                        break;
+                    case 2:
+                        Console.WriteLine("Атака клона!");
+                        if (shadowClone == true)
+                        {
+                            samuraiHealth -= 20;
+                            shadowClone = false;
+                            ninjaHealth -= samuraiDamage;
+                        }
+                        else
+                        {
+                            ninjaHealth -= samuraiDamage * 2;
+                        }
+                        break;
+                    case 3:
+                        Console.WriteLine("Уклонение!");
+                        if(evasionCount != 0)
+                        {
+                            evasionCount--;
+                            ninjaHealth += 10;
+                        }
+                        else
+                        {
+                            ninjaHealth -= samuraiDamage;
+                        }
+                        break;
+                    case 4:
+                        Console.WriteLine("Гневный удар!");
+                        samuraiHealth -= 15;
+                        ninjaHealth -= 15;
+                        break;
+                    default:
+                        Console.WriteLine("Введено неверное значение, попробуйте снова");
+                        break;
+                }
+            }
+            if(ninjaHealth <= 0 && samuraiHealth <=0)
+            {
+                Console.WriteLine("Ниндзя и самурай погибли");
+            }
+            else if (ninjaHealth <= 0)
+            {
+                Console.WriteLine("Ниндзя умер в битве\n Самурай победил!");
+            }
+            else if (samuraiHealth <= 0)
+            {
+                Console.WriteLine("Самурай умер в битве\n Ниндзя победил!");
+            }
+        }
+    }
+}
