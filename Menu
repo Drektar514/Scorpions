@@ -1,0 +1,56 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleMenu
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            bool activeMenu = true;
+            string changeUserName = "Sergey";
+            string userPassword = "qwerty";
+            string userInput;
+            while (activeMenu)
+            {
+                Console.WriteLine("Добро пожаловать в меню, выберите что хотите сделать:");
+                Console.WriteLine("1 - изменить имя, 2 - изменить пароль, 3 - вывести личную информацию, 4 - закрыть программу: ");
+                userInput = Console.ReadLine();
+                switch (userInput)
+                {
+                    case "1":
+                        Console.WriteLine("Смена имени:");
+                        changeUserName = Console.ReadLine();
+                        Console.WriteLine("Теперь ваше имя " + changeUserName);
+                        break;
+                    case "2":
+                        Console.WriteLine("Смена пароля, введите ваш пароль: ");
+                        userPassword = Console.ReadLine();
+                        Console.WriteLine($"Ваш новый пароль теперь {userPassword}");
+                        break;
+                }
+                if (userInput == "3")
+                {
+                    Console.Write("Секретная информация, введите пароль:");
+                    userInput = Console.ReadLine();
+                    if(userInput == userPassword)
+                    {
+                        Console.WriteLine("Молодцом, ты теперь знаешь мою тайну, моё имя " + changeUserName);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Ты ввёл не правильный пароль, ты недостоин знать тайну");
+                    }
+                }
+                else if(userInput == "4")
+                {
+                    Console.WriteLine("Всего хорошего!");
+                    break;
+                }
+            }
+        }
+    }
+}
