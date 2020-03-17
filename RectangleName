@@ -1,0 +1,31 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RectangleName
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string userRectangleSymbol;
+            string userName;
+            Console.Write("Введите символ из которого создаст рамку: ");
+            userRectangleSymbol = Console.ReadLine();
+            Console.Write("Введите ваше имя: ");
+            userName = Console.ReadLine();
+            for (int i = 0; i <= userName.Length +1; i++)
+            {
+                Console.Write(userRectangleSymbol);
+            }
+            Console.WriteLine("\n" + userRectangleSymbol + userName + userRectangleSymbol);
+            for (int i = 0; i <= userName.Length +1; i++)
+            {
+                Console.Write(userRectangleSymbol);
+            }
+            
+        }
+    }
+}
