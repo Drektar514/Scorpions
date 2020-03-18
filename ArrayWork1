@@ -1,0 +1,44 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ArrayWork1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[,] array = { 
+                {5,7,12,15 },
+                { 1,3,5,7}, 
+                {2,4,6,8 }, 
+                {23,15,8,17}
+            };
+            int sumSecondRow = 0;
+            int multiplicationFirstColumn = array[0,0];
+            Console.WriteLine("Вывод исходной матрицы: ");
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    Console.Write(array[i,j] + " ");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine("Сумма второй строки: ");
+            for (int i = 0; i < array.GetLength(1); i++)
+            {
+                sumSecondRow += array[1,i];
+            }
+            Console.WriteLine(sumSecondRow);
+            Console.WriteLine("Умножение первого столбца: ");
+            for (int i = 1; i < array.GetLength(0); i++)
+            {
+                multiplicationFirstColumn *= array[i, 0];
+            }
+            Console.WriteLine(multiplicationFirstColumn);
+        }
+    }
+}
