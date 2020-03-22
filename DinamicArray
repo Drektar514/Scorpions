@@ -1,0 +1,66 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DynamicArray
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string userImput;
+            bool active = true;
+            int[] numbers = new int[0];
+            int userNumber;
+            bool isNumber;
+            int sum = 0;
+
+            while (active)
+            {
+                Console.WriteLine("Добро пожаловать в систему, введите числа или команду в консоль: ");
+                Console.WriteLine("sum - сложить все ваши числа, sort - сортировать все ваши числа, exit - выход из программы");
+                userImput = Console.ReadLine();
+                isNumber = Int32.TryParse(userImput, out userNumber);
+                switch (userImput) {
+                    case "sum":
+                        for (int i = 0; i < numbers.Length; i++)
+                        {
+                            sum += numbers[i];
+                        }
+                        Console.WriteLine(sum);
+                        break;
+                    case "sort":
+                        break;
+                    case "exit":
+                    active = false;
+                    Console.WriteLine("До новых встреч!");
+                        break;
+                    default:
+                        if (isNumber)
+                        {
+                            int[] tempNumbers = new int[numbers.Length + 1];
+                            userNumber = Convert.ToInt32(userImput);
+                            for (int i = 0; i < numbers.Length; i++)
+                            {
+                                tempNumbers[i] = numbers[i];
+                            }
+                            tempNumbers[numbers.Length] = userNumber;
+                            numbers = tempNumbers;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Введите другое значение: ");
+                        }
+                        break;
+                }
+                Console.Write("Ваши числа: ");
+                for (int i = 0; i < numbers.Length; i++)
+                {
+                    Console.Write(numbers[i] + " ");
+                }
+            }
+        }
+    }
+}
