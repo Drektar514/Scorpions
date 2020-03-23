@@ -1,0 +1,44 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ReadInt
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            while (true)
+            {
+                ReadInt();
+            }
+        }
+        static int ReadInt()
+        {
+            bool active = true;
+            int number;
+            bool isNumber = false;
+            string userInput;
+            Console.WriteLine("Введите число: ");
+            userInput = Console.ReadLine();
+            while (active)
+            {
+                isNumber = Int32.TryParse(userInput, out number);
+                if (isNumber)
+                {
+                    active = false;
+                }
+                else
+                {
+                    Console.WriteLine("Ошибка, введите другое число: ");
+                    userInput = Console.ReadLine();
+                }
+            }
+            number = Convert.ToInt32(userInput);
+            Console.WriteLine("Успех! Ваше число: " + number);
+            return number;
+        }
+    }
+}
