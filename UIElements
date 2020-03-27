@@ -1,0 +1,62 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace UIElement
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Добро пожаловать: ");
+            Console.Write("Укажите текущее количество вашего здоровья/маны: ");
+            int userValue = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Укажите общее количество вашего здоровья/маны: ");
+            int maxValue = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Введите символ которым будет отображаться ваше здоровье: ");
+            char userChar = Convert.ToChar(Console.ReadLine());
+            Console.Write("Укажите расположение по длинне: ");
+            int posX = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Укажите расположение по высоте: ");
+            int posY = Convert.ToInt32(Console.ReadLine());
+            ConsoleColor userColor = Console.BackgroundColor;
+            Console.WriteLine("Выберите цвет: красный, синий, зелёный");
+            switch (Console.ReadLine())
+            {
+                case "красный":
+                    userColor = ConsoleColor.Red;
+                    break;
+                case "синий":
+                    userColor = ConsoleColor.Blue;
+                    break;
+                case "зелёный":
+                    userColor = ConsoleColor.Green;
+                    break;
+                default:
+                    Console.WriteLine("Ошибка, введите цвет повторно: ");
+                    break;
+            }
+            UIElement(userValue,maxValue,userChar, posX, posY, userColor);
+        }
+        static void UIElement(int value, int maxValue,char userChar, int posX, int posY, ConsoleColor userColor)
+        {
+            ConsoleColor defaultColor = Console.BackgroundColor;
+            Console.SetCursorPosition(posX, posY);
+            Console.Write("[");
+            Console.BackgroundColor = userColor;
+            for (int i = 0; i < value; i++)
+            {
+                Console.Write($"{userChar}");
+            }
+            Console.BackgroundColor = defaultColor;
+            for (int i = value; i < maxValue; i++)
+            {
+                Console.Write("_");
+            }
+            Console.Write("]");
+            Console.ReadKey();
+        }
+    }
+}
