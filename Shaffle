@@ -1,0 +1,32 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Shaffle
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] array = {0,1,2,3,4,5,6,7,8,9};
+            Shaffle(array);
+            Console.ReadKey();
+        }
+        static int[] Shaffle(int[] array)
+        {
+            int box;
+            Random rand = new Random();
+            for (int i = array.Length-1; i >=1 ; i--)
+            {
+                int shaffleIndex = rand.Next(i+1);
+                box = array[shaffleIndex];
+                array[shaffleIndex] = array[i];
+                array[i] = box;
+                Console.Write(array[i] + " ");
+            }
+            return array; 
+        }
+    }
+}
