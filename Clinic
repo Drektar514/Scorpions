@@ -1,0 +1,25 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Clinic
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int receptionTimeOnePerson = 10;
+            int peopleInLine;
+            int waitingHourInLine;
+            int watingMinInLine;
+            Console.WriteLine("Добрый день, вы стоите в очереди к врачу, скажите, сколько перед вами человек? - ");
+            peopleInLine = Convert.ToInt32(Console.ReadLine());
+            waitingHourInLine = (peopleInLine * receptionTimeOnePerson)/60;
+            watingMinInLine = (peopleInLine * receptionTimeOnePerson) % 60;
+            Console.WriteLine($"Время вашего ожидания состовляет {waitingHourInLine} часов {watingMinInLine} минут");
+            Console.ReadKey();
+        }
+    }
+}
