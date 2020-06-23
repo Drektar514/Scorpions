@@ -1,0 +1,22 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PicturesInRow
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int pictures = 52;
+            int picturesInRow = 3;
+            int fullRow = pictures/picturesInRow;
+            int stayPictures = pictures % picturesInRow;
+            Console.WriteLine($"Количество заполненых рядов - {fullRow}");
+            Console.WriteLine($"Количество оставшихся картин - {stayPictures}");
+            Console.ReadKey();
+        }
+    }
+}
