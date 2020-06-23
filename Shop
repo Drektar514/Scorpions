@@ -1,0 +1,28 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Shop
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int playerGold;
+            int amountGem;
+            int priceGem = 10;
+            bool enoughtGold;
+            Console.Write("Здравствуй игрок, введите количество вашего золота - ");
+            playerGold = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine($"Покупай у нас кристал, и будет тебе счастье, стоит кристал всего {priceGem}. Сколько кристалов хотите купить? - ");
+            amountGem = Convert.ToInt32(Console.ReadLine());
+            enoughtGold = playerGold >= priceGem * amountGem;
+            amountGem *= Convert.ToInt32(enoughtGold);
+            playerGold -= amountGem * priceGem;
+            Console.WriteLine($"После нашей сделки у вас осталось {playerGold} золота и прибавилось {amountGem} кристалов");
+            Console.ReadKey();
+        }
+    }
+}
