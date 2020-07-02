@@ -1,0 +1,26 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CodeReplay
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string userInput;
+            int replay;
+            Console.Write("Введите сообщение которое хотите повторить: ");
+            userInput = Console.ReadLine();
+            Console.Write("Сколько раз вы хотите повторить данное сообщение? ");
+            replay = Convert.ToInt32(Console.ReadLine());
+            while(replay > 0)
+            {
+                Console.WriteLine(userInput);
+                replay--;
+            }
+        }
+    }
+}
