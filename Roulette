@@ -1,0 +1,43 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Roulette
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            bool isActiveRoulette = true;
+            Random random = new Random();
+            int rouletteNumber;
+            string userInput;
+            while (isActiveRoulette)
+            {
+                Console.WriteLine("Добро пожаловать в рулетку, выберите число на которое хотите поставить от 0 до 20 или " +
+                    "введите exit для выхода : ");
+                userInput = Console.ReadLine();
+                if(userInput == "exit")
+                {
+                    isActiveRoulette = false;
+                    Console.WriteLine("Увидимся в следующий раз!");
+                    Console.ReadKey();
+                    break;
+                }
+                rouletteNumber = random.Next(0, 21);
+                if (Convert.ToInt32(userInput) == rouletteNumber)
+                {
+                    Console.WriteLine("Вы выиграли в нашу рулетку!");
+                }
+                else
+                {
+                    Console.WriteLine($"Повезёт в следующий раз, это было число {rouletteNumber}");
+                }
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
+    }
+}
