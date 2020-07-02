@@ -1,0 +1,112 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PersonnelAccounting
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            bool activeSistem = true;
+            string[] fullName = new string[0];
+            string[] positionOnWork = new string[0];
+            while (activeSistem)
+            {
+                Console.WriteLine("Добро пожаловать в кадровую систему, выберите нужный пункт системы.\n1 - Добавить досье." +
+                    "\n2 - Вывести все досье.\n3 - Уволить сотрудника.\n4 - Найти работника по фамилии.\n5 - Выйти из программы.");
+                string userInput = Console.ReadLine();
+                switch (Convert.ToInt32(userInput))
+                {
+                    case 1:
+                        AddDosie(ref fullName, ref positionOnWork);
+                        break;
+                    case 2:
+                        ShowAllDosies(fullName, positionOnWork);
+                        break;
+                    case 3:
+                        DeleteDosie(ref fullName, ref positionOnWork);
+                        break;
+                    case 4:
+                        FindWorkerOnFullName(fullName);
+                        break;
+                    case 5:
+                        activeSistem = false;
+                        Console.WriteLine("Пользуйтесь нами ещё!");
+                        break;
+                }
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
+        static void AddDosie(ref string[] fullName, ref string[] positionOnWork)
+        {
+            string[] tempFullName = new string[fullName.Length + 1];
+            string[] tempPositionOnWork = new string[positionOnWork.Length + 1];
+            for (int i = 0; i < fullName.Length; i++)
+            {
+                tempFullName[i] = fullName[i];
+                tempPositionOnWork[i] = positionOnWork[i];
+            }
+            Console.Write("Введите ФИО нового сотрудника: ");
+            tempFullName[fullName.Length] = Console.ReadLine();
+            Console.Write("Введите должность нового сотрудника: ");
+            tempPositionOnWork[positionOnWork.Length] = Console.ReadLine();
+            fullName = tempFullName;
+            positionOnWork = tempPositionOnWork;
+            Console.WriteLine("Рабочий добавлен.");
+        }
+
+        static void ShowAllDosies(string[] fullName, string[] positionOnWork)
+        {
+            for (int i = 0; i < fullName.Length; i++)
+            {
+                Console.WriteLine($"{i + 1}.Ваш сотрудник {fullName[i]} - {positionOnWork[i]}.");
+            }
+        }
+
+        static void DeleteDosie(ref string[] fullName, ref string[] positionOnWork)
+        {
+            int deleteDosie;
+            string[] tempFullName = new string[fullName.Length - 1];
+            string[] tempPositionOnWork = new string[positionOnWork.Length - 1];
+            ShowAllDosies(fullName, positionOnWork);
+            Console.Write("Вы решили уволить сотрудника, кого вы хотите убрать?");
+            deleteDosie = (Convert.ToInt32(Console.ReadLine()))-1;
+            for(int i = 0; i < deleteDosie; i++)
+            {
+                tempFullName[i] = fullName[i];
+                tempPositionOnWork[i] = positionOnWork[i];
+            }
+            for (int i = deleteDosie+1; i < fullName.Length; i++)
+            {
+                tempFullName[i-1] = fullName[i];
+                tempPositionOnWork[i-1] = positionOnWork[i];
+            }
+            Console.WriteLine($"Вы уволили {fullName[deleteDosie]}.");
+            fullName = tempFullName;
+            positionOnWork = tempPositionOnWork;
+        }
+
+        static void FindWorkerOnFullName(string[] fullName)
+        {
+            bool workerIsFind = false;
+            Console.Write("Введите фамилию работника которого хотите найти - ");
+            string findWorker = Console.ReadLine();
+            for (int i = 0; i < fullName.Length; i++)
+            {
+                if(findWorker.ToLower() == fullName[i].ToLower())
+                {
+                    Console.WriteLine($"Этот работник находится под номером {i+1} в данной системе");
+                    workerIsFind = true;
+                }
+            }
+            if (workerIsFind == false)
+            {
+                Console.WriteLine("Работник с такой фамилией у нас не работает.");
+            }
+        }
+    }
+}
