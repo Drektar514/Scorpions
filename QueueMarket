@@ -1,0 +1,34 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Queue
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Queue<int> buyerMoney = new Queue<int>();
+            int sum = 0;
+            buyerMoney.Enqueue(123);
+            buyerMoney.Enqueue(1567);
+            buyerMoney.Enqueue(2376);
+            buyerMoney.Enqueue(234);
+            buyerMoney.Enqueue(527);
+            buyerMoney.Enqueue(29);
+            buyerMoney.Enqueue(5693);
+            while (buyerMoney.Count > 0)
+            {
+                Console.WriteLine($"В кассе сейчас {sum} рублей.");
+                sum += buyerMoney.Dequeue();
+                Console.WriteLine($"После обслуживания клиента в кассе стало {sum} рублей.");
+                Console.ReadKey();
+                Console.Clear();
+            }
+            Console.WriteLine($"Покупатели закончились, итог сегодняшних торгов составил {sum} рублей.");
+            Console.ReadKey();
+        }
+    }
+}
