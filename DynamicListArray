@@ -1,0 +1,55 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DynamicListArray
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            bool activeProgram = true;
+            string userInput;
+            int userNumber;
+            bool isNumber;
+            List<int> numbers = new List<int>();
+            Console.WriteLine("Здравствуйте введите число.\nsum - сложить все числа.\nexit - выйти из программы.");
+            while (activeProgram)
+            {
+                userInput = Console.ReadLine();
+                isNumber = Int32.TryParse(userInput,out userNumber);
+                if (isNumber)
+                {
+                    userNumber = Convert.ToInt32(userInput);
+                    numbers.Add(userNumber);
+                    continue;
+                }
+                else if (userInput == "sum")
+                {
+                    int sum = 0 ;
+                    for (int i = 0; i < numbers.Count; i++)
+                    {
+                        sum += numbers[i];
+                    }
+                    Console.WriteLine($"Сумма всех чисел листа = {sum}.");
+                }
+                else if(userInput =="exit")
+                {
+                    Console.WriteLine("Выход из программы");
+                    activeProgram = false;
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Вы ввели некорректное число");
+                    Console.ReadKey();
+                    continue;
+                }
+                Console.ReadKey();
+
+            }
+        }
+    }
+}
