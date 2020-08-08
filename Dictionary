@@ -1,0 +1,33 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Dictionary
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string userInput;
+            Dictionary<string, string> translatorAnimal = new Dictionary<string, string>();
+            translatorAnimal.Add("Кот", "Cat");
+            translatorAnimal.Add("Собака", "Dog");
+            translatorAnimal.Add("Слон", "Elephant");
+            translatorAnimal.Add("Енот", "Raccoon");
+            translatorAnimal.Add("Мышь", "Mouse");
+            Console.Write("Узнайте как переводиться ваше животное на английский язык, введите название животного - ");
+            userInput = Console.ReadLine();
+            if (translatorAnimal.ContainsKey(userInput))
+            {
+                Console.WriteLine("Ваш перевод - " +translatorAnimal[userInput]);
+            }
+            else
+            {
+                Console.WriteLine("Такого животного в нашем словаре нет.");
+            }
+            Console.ReadKey();
+        }
+    }
+}
