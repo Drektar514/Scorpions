@@ -1,0 +1,46 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PlayerCreater
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Player player1 = new Player();
+            Player player2 = new Player("Scorpion", 150, 20, 3000);
+            player1.PlayerInfo();
+            player2.PlayerInfo();
+            Console.ReadKey();
+        }
+    }
+    public class Player
+    {
+        public string NickName;
+        public int Health;
+        public int Speed;
+        public int Gold;
+
+        public Player(string nickName, int health, int speed, int gold)
+        {
+            NickName = nickName;
+            Health = health;
+            Speed = speed;
+            Gold = gold;
+        }
+        public Player()
+        {
+            NickName = "New Player";
+            Health = 100;
+            Speed = 10;
+            Gold = 1500;
+        }
+        public void PlayerInfo()
+        {
+            Console.WriteLine($"Имя игрока - {NickName}\nЗдоровье игрока - {Health}\nСкорость игрока - {Speed}\nЗолото игрока - {Gold}");
+        }
+    }
+}
