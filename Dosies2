@@ -1,0 +1,63 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Dosies2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<string> fullName = new List<string>();
+            List<string> position = new List<string>();
+            bool active = true;
+            string userInput;
+            while (active)
+            {
+                Console.WriteLine("Выберите пункт: 1 - Добавить досье.\n2 - Вывести все досье.\n3 - Удалить досье.\n4 - Выйди из программы.");
+                userInput = Console.ReadLine();
+                switch (userInput)
+                {
+                    case "1":
+                        Console.Write("Введите ФИО нового сотрудника - ");
+                        fullName.Add(Console.ReadLine());
+                        Console.Write("Введите должность этого сотрудника - ");
+                        position.Add(Console.ReadLine());
+                        Console.WriteLine("Досье добавлено.");
+                        break;
+                    case "2":
+                        ShowAllDosies(fullName, position);
+                        break;
+                    case "3":
+                        int deleteIndex;
+                        Console.WriteLine("Выберите номер досье для удаления - ");
+                        ShowAllDosies(fullName, position);
+                        deleteIndex = Convert.ToInt32(Console.ReadLine());
+                        fullName.RemoveAt(deleteIndex-1);
+                        position.RemoveAt(deleteIndex-1);
+                        Console.WriteLine("Досье удалено.");
+                        break;
+                    case "4":
+                        active = false;
+                        Console.WriteLine("До новых встреч");
+                        break;
+                    default:
+                        Console.WriteLine("Введено некоректное значение, попробуйте снова");
+                        break;
+                }
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
+        static void ShowAllDosies(List<string> fullName, List<string> position)
+        {
+            Console.WriteLine("Список всех досье");
+            for (int i = 0; i < fullName.Count; i++)
+            {
+                Console.WriteLine($"{i+1}. {fullName[i]} - {position[i]}.");
+            }
+        }
+    }
+}
