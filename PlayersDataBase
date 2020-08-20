@@ -1,0 +1,122 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PlayersDataBase
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            PlayersList playerList = new PlayersList();
+            bool active = true;
+            string userInput;
+            while (active)
+            {
+                Console.WriteLine("Добро пожаловать в базу данных\n1 - Добавить нового игрока\n" +
+                    "2 - Заблокировать/разблокировать игрока по порядочному номеру\n" +
+                    "3 - Удалить игрока\n4 - Выход из базы.");
+                userInput = Console.ReadLine();
+                switch (Convert.ToInt32(userInput))
+                {
+                    case 1:
+                        playerList.AddPlayer();
+                        break;
+                    case 2:
+                        playerList.ChangeStatusPlayer();
+                        break;
+                    case 3:
+                        playerList.DeletePlayer();
+                        break;
+                    case 4:
+                        Console.WriteLine("Выход из базы данных");
+                        active = false;
+                        Console.ReadKey();
+                        break;
+                    default:
+                        Console.WriteLine("Введено неверное значение");
+                        break;
+                }
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
+    }
+
+    public class Player
+    {
+        private string nickName;
+        public string NickName { get; set; }
+        private int level;
+        public int Level { get; set; }
+        private bool banned = false;
+        public bool Banned {get; set;}
+        public Player(string NickName, int Level)
+        {
+            nickName = NickName;
+            level = Level;
+        }
+
+        public void ShowPlayerInfo()
+        {
+            banned = Banned;
+            if (!banned)
+            Console.WriteLine($"Игрок с ником - {nickName} : {level} уровня активен"); 
+            else
+            Console.WriteLine($"Игрок с ником - {nickName} : {level} уровня заблокирован");
+        }
+    }
+   public class PlayersList
+    {
+        List<Player> players = new List<Player>();
+        private int playerNumber;
+        public void AddPlayer()
+        {
+            Console.WriteLine("Добавляем нового игрока.");
+            Console.WriteLine("Введите имя нового игрока: ");
+            string NickName = Console.ReadLine();
+            Console.WriteLine("Введите уровень нового игрока: ");
+            int Level = Convert.ToInt32(Console.ReadLine());
+            Player player = new Player(NickName,Level);
+            players.Add(player);
+            Console.WriteLine($"Игрок с ником - {NickName} добавлен и имеет уровень {Level}.");
+        }
+        public void ShowAllPlayers()
+        {
+            for (int i = 0; i < players.Count; i++)
+            {
+                Console.Write($"{i}. ");
+                players[i].ShowPlayerInfo();
+            }
+        }
+        public void ChangeStatusPlayer()
+        {
+            Console.WriteLine("Введите номер игрока которого вы хотите заблокировать/разблокировать?");
+            ShowAllPlayers();
+            playerNumber = Convert.ToInt32(Console.ReadLine());
+            if (players[playerNumber].Banned)
+            {
+                players[playerNumber].Banned = false;
+                Console.WriteLine($"Выбранный игрок вновь активен.");
+            }
+            else
+            {
+                players[playerNumber].Banned = true;
+            Console.WriteLine($"Выбранный игрок заблокирован.");
+            }
+        }
+        public void DeletePlayer()
+        {
+            Console.WriteLine("Какого игрока вы хотите удалить?");
+            ShowAllPlayers();
+            playerNumber =Convert.ToInt32(Console.ReadLine());
+            Console.Write("Вы удалили игрока: ");
+            players[playerNumber].ShowPlayerInfo();
+            players.RemoveAt(playerNumber);
+        }
+
+    }
+
+}
