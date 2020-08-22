@@ -1,0 +1,135 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Market
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Seller seller = new Seller();
+            seller.TakeProducts();
+            Random rand = new Random();
+            Player player = new Player(rand.Next(150, 350));
+            bool active = true;
+            string userInput;
+            int indexProduct;
+            
+            while (active)
+            {
+                Console.WriteLine("Вы около торговца, у него много разных товаров, вы можете:\n1.Посмотреть весь товар и узнать цену.\n" +
+                    "2.Приобрести нужный товар.\n3.Посмотреть свои вещи.\n4.Уйти от торговца.");
+                userInput = Console.ReadLine();
+                switch (userInput)
+                {
+                    case "1":
+                        Console.WriteLine("Список всех товаров: ");
+                        seller.ShowAllProducts();
+                        break;
+                    case "2":
+                        Console.WriteLine("Какой товар вы хотите приобрести?");
+                        seller.ShowAllProducts();
+                        indexProduct = Convert.ToInt32(Console.ReadLine());
+                        player.BuyProduct(seller.Products[indexProduct], seller.Products[indexProduct].ProductPrice);
+                        seller.TradeProduct(indexProduct);
+                        break;
+                    case "3":
+                        player.ShowPlayerInventory();
+                        break;
+                    case "4":
+                        active = false;
+                        break;
+                    default:
+                        Console.WriteLine("Неверное значение, попробуйте снова");
+                        break;
+                }
+            }
+            Console.ReadKey();
+            Console.Clear();
+        }
+    }
+    class Player
+    {
+        private List<Product> _inventory = new List<Product>();
+        private int _playerMoney;
+        public int PlayerMoney { get; private set; }
+        public Player(int playerMoney)
+        {
+            _playerMoney = playerMoney;
+        }
+        public void BuyProduct(Product product, int productPrice)
+        {
+            if (_playerMoney >= productPrice)
+            {
+                _playerMoney -= productPrice;
+                _inventory.Add(product);
+            }
+            else
+            {
+                Console.WriteLine("К сожеалению, денег на этот продукт не хватает.");
+            }
+        }
+        public void ShowPlayerInventory()
+        {
+            Console.WriteLine($"У игрока на данный момент - {_playerMoney} денег");
+            for (int i = 0; i < _inventory.Count; i++)
+            {
+                _inventory[i].ShowProductInfo();
+            }
+        }
+    }
+    class Seller
+    {
+        private List<Product> _products = new List<Product>();
+        public List<Product> Products { get; private set; }
+        private int _sellerMoney;
+        public int SellerMoney { get; private set; }
+        Random rand = new Random();
+        private int _productPrice;
+        private string[] _productName = { "Мясо", "Рыба", "Овощи", "Фрукты", "Ягоды" };
+
+        public void TakeProducts()
+        {
+            for (int i = 0; i <_productName.Length; i++)
+            {
+                _productPrice = rand.Next(10, 100);
+                Product product = new Product(_productName[i], _productPrice);
+                _products.Add(product);
+            }
+            Products = _products;
+        }
+        public void ShowAllProducts()
+        {
+            for (int i = 0; i < _products.Count; i++)
+            {
+                _products[i].ShowProductInfo();
+            }
+        }
+        public void TradeProduct(int indexProduct)
+        {
+            _sellerMoney += _productPrice;
+            _products.RemoveAt(indexProduct);
+        }
+        
+    }
+    class Product
+    {
+        private string _productName;
+        private int _productPrice;
+        public string ProductName { get; private set; }
+        public int ProductPrice { get;private set; }
+
+        public Product(string productName, int productPrice)
+        {
+            _productName = productName;
+            _productPrice = productPrice;
+        }
+        public void ShowProductInfo()
+        {
+            Console.WriteLine($"{_productName} стоит - {_productPrice}" );
+        }
+    }
+}
