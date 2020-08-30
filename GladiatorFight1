@@ -1,0 +1,143 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GladiatorFight
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int gladiatorIndex;
+            Random rand = new Random();
+            Gladiator firstGladiator;
+            Gladiator secondGladiator;
+            List<Gladiator> gladiators = new List<Gladiator>();
+            gladiators.Add(new Hulk("Крушитель халк", 2000, 20, 170, false));
+            gladiators.Add(new Archer("Лучник сокол", 1200, 50, 300, false));
+            gladiators.Add(new Assasin("Тихий убийца", 700, 50, 200, false));
+            gladiators.Add(new Monk("Монах", 1700, 70, 150, false));
+            gladiators.Add(new Berserker("Безумец", 3000, 30, 190,false));
+            for (int i = 0; i < gladiators.Count; i++)
+            {
+                gladiators[i].ShowGladiator();
+            }
+            Console.WriteLine("Добро пожаловать на арену, выберите первого гладиатора для сражения: ");
+            gladiatorIndex = Convert.ToInt32(Console.ReadLine());
+            firstGladiator = gladiators[gladiatorIndex];
+            Console.WriteLine("Выберите второго гладиатора: ");
+            gladiatorIndex = Convert.ToInt32(Console.ReadLine());
+            secondGladiator = gladiators[gladiatorIndex];
+            while(firstGladiator.Health > 0 && secondGladiator.Health > 0)
+            {
+                firstGladiator._activeSkill = Convert.ToBoolean(rand.Next(0, 2));
+                if (firstGladiator._activeSkill)
+                    firstGladiator.ActiveGladiatorSkill();
+                firstGladiator.TakeDamage(firstGladiator.Armor, secondGladiator.Damage);
+                secondGladiator._activeSkill = Convert.ToBoolean(rand.Next(0, 2));
+                if (secondGladiator._activeSkill)
+                    secondGladiator.ActiveGladiatorSkill();
+                secondGladiator.TakeDamage(secondGladiator.Armor, firstGladiator.Damage);
+
+                firstGladiator.ShowGladiator();
+                secondGladiator.ShowGladiator();
+                Console.ReadKey();
+            }
+            if (firstGladiator.Health >= 0)
+            {
+                Console.WriteLine("Победителем стал: ");
+                firstGladiator.ShowGladiator();
+            }
+            else
+            {
+                Console.WriteLine("Победителем стал: ");
+                secondGladiator.ShowGladiator();
+            }
+            Console.ReadKey();
+        }
+    }
+    class Gladiator
+    {
+        protected string name;
+        protected float health;
+        public float Health => health;
+        protected float armor;
+        public float Armor  => armor;
+        protected float damage;
+        public float Damage => damage; 
+        public bool _activeSkill;
+        public virtual void ActiveGladiatorSkill()
+        {
+            Console.WriteLine("Умение активировано");
+        }
+
+        public void ShowGladiator()
+        {
+            Console.WriteLine($"Имя гладиатора: {name}, {health} жизней,{armor} брони,{damage} атаки.");
+        }
+        public Gladiator(string name,float health, float armor, float damage, bool activeSkill)
+        {
+            this.name = name;
+            this.health = health;
+            this.armor = armor;
+            this.damage = damage;
+            _activeSkill = activeSkill;
+        }
+        public void TakeDamage(float armor, float damage)
+        {
+            health -= damage - ((damage* armor)/100);
+        }
+    }
+    class Hulk : Gladiator
+    {
+        public Hulk(string name, float health, float armor, float damage, bool activeSkill) : base(name, health, armor, damage, activeSkill) { }
+        
+        public override void ActiveGladiatorSkill()
+        {
+            base.ActiveGladiatorSkill();
+            damage *= 2;
+            health += 500;
+        }
+    }
+    class Archer : Gladiator
+    {
+        
+        public Archer(string name, float health, float armor, float damage, bool activeSkill) : base(name, health, armor, damage, activeSkill) { }
+        public override void ActiveGladiatorSkill()
+        {
+            base.ActiveGladiatorSkill();
+            damage *= 3.5f;
+        }
+    }
+    class Assasin : Gladiator
+    {
+        public Assasin(string name, float health, float armor, float damage, bool activeSkill) : base(name, health, armor, damage, activeSkill) { }
+        public override void ActiveGladiatorSkill()
+        {
+            base.ActiveGladiatorSkill();
+            damage *= 5;
+        }
+    }
+    class Monk : Gladiator
+    {
+        public Monk(string name, float health, float armor, float damage, bool activeSkill) : base(name, health, armor, damage, activeSkill) { }
+        public void Pray()
+        {
+            base.ActiveGladiatorSkill();
+            health += 300;
+            armor += 5;
+        }
+    }
+    class Berserker : Gladiator
+    {
+        public Berserker(string name, float health, float armor, float damage, bool activeSkill) : base(name, health, armor, damage, activeSkill) { }
+        public override void ActiveGladiatorSkill()
+        {
+            base.ActiveGladiatorSkill();
+            health /= 2;
+            damage *= 10;
+        }
+    }
+}
