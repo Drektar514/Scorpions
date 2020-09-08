@@ -1,0 +1,151 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Seller
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Seller seller = new Seller();
+            Product product = new Product();
+            Random randomMoney = new Random();
+            Player player = new Player(randomMoney.Next(150, 500));
+            bool active = true;
+            string userInput;
+            int indexProduct;
+            bool trade;
+            seller.TakeProducts();
+
+            while (active)
+            {
+                Console.WriteLine("Вы около торговца, у него много разных товаров, вы можете:\n1.Посмотреть весь товар этого и узнать цену.\n" +
+                    "2.Приобрести нужный товар.\n3.Посмотреть свои вещи.\n4.Уйти от торговца.");
+                userInput = Console.ReadLine();
+                switch (userInput)
+                {
+                    case "1":
+                        Console.WriteLine("Список всех товаров: ");
+                        seller.ShowProducts();
+                        break;
+                    case "2":
+                        Console.WriteLine("Какой товар вы хотите приобрести?");
+                        seller.ShowProducts();
+                        indexProduct = Convert.ToInt32(Console.ReadLine());
+                        seller.TakePlayerChoiceProduct(indexProduct, product);
+                        player.BuyProduct(product, product.Price,out trade);
+                        seller.TradeProduct(indexProduct, trade);
+                        break;
+                    case "3":
+                        player.ShowPlayerInventory();
+                        break;
+                    case "4":
+                        active = false;
+                        break;
+                    default:
+                        Console.WriteLine("Неверное значение, попробуйте снова");
+                        break;
+                }
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
+    }
+    class Player
+    {
+        private List<Product> _inventory = new List<Product>();
+        public int Money { get; private set; }
+        public Player(int money)
+        {
+            Money = money;
+        }
+        public void BuyProduct(Product product, int productPrice, out bool trade)
+        {
+            if (Money >= productPrice)
+            {
+                trade = true;
+                Money -= productPrice;
+                _inventory.Add(product);
+            }
+            else
+            {
+                trade = false;
+                Console.WriteLine("К сожеалению, денег на этот продукт не хватает.");
+            }
+        }
+        public void ShowPlayerInventory()
+        {
+            Console.WriteLine($"У игрока на данный момент - {Money} денег");
+            for (int i = 0; i < _inventory.Count; i++)
+            {
+                _inventory[i].ShowProductInfo();
+            }
+        }
+    }
+    class Seller
+    {
+        private List<Product> _products = new List<Product>();
+        public int Money { get; private set; }
+        private Random _randomPrice = new Random();
+        private Random _randomProductQuantity = new Random();
+        private int _productPrice;
+        private string[] _productName = { "Мясо", "Рыба", "Овощи", "Фрукты", "Ягоды", "Цветы", "Вода", "Чай", "Кофе", "Витамины"};
+
+        public void TakeProducts()
+        {
+            for (int i = 0; i <_randomProductQuantity.Next(0,_productName.Length + 1); i++)
+            {
+                _productPrice = _randomPrice.Next(10, 100);
+                Product product = new Product(_productName[i], _productPrice);
+                _products.Add(product);
+            }
+        }
+        public void ShowProducts()
+        {
+            for (int i = 0; i < _products.Count; i++)
+            {
+                _products[i].ShowProductInfo();
+            }
+        }
+        public void TradeProduct(int indexProduct, bool trade)
+        {
+            if (trade)
+            {
+                Money += _productPrice;
+                _products.RemoveAt(indexProduct);
+            }
+            else
+            {
+                Console.WriteLine("Сделка не совершена");
+            }
+        }
+        public Product TakePlayerChoiceProduct(int indexProduct,Product product)
+        {
+            product = _products[indexProduct];
+            return product;
+        }
+        
+    }
+    class Product
+    {
+        public string Name { get; private set; }
+        public int Price { get;private set; }
+
+        public Product(string name, int price)
+        {
+            Name = name;
+            Price = price;
+        }
+        public Product()
+        {
+
+        }
+        public void ShowProductInfo()
+        {
+            Console.WriteLine($"{Name} стоит - {Price}" );
+        }
+    }
+}
