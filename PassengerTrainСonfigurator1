@@ -1,0 +1,94 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PassengerTrainСonfigurator
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Train> trains = new List<Train>();
+            bool active = true;
+            int passangers = 0;
+            while (active)
+            {
+                Train train = new Train();
+                if (trains.Count == 0)
+                {
+                    Console.WriteLine("Поезд отсутствует.");
+                }
+                else
+                {
+                    Console.Write("Сейчас в пути поезд: ");
+                    trains[trains.Count - 1].ShowTrainInfo();
+                }
+                train.CreateDirection();
+                train.SellTickets(ref passangers);
+                train.TrainBuilder(passangers);
+                trains.Add(train);
+                Console.Clear();
+            }
+
+        }
+    }
+    class Train
+    {
+        private List<Vagon> _vagons = new List<Vagon>();
+        private string _startStation;
+        private string _endStation;
+        Random _randomPassangers = new Random(); 
+        public void CreateDirection()
+        {
+            Console.Write("Введите станцию отправления поезда: ");
+            _startStation = Console.ReadLine();
+            Console.Write("Введите конечную станцию поезда: ");
+            _endStation = Console.ReadLine();
+        }
+        public void SellTickets(ref int passangers)
+        {
+            passangers = _randomPassangers.Next(10, 500);
+        }
+        public void TrainBuilder(int passangers)
+        {
+            while (passangers > 0) {
+                if (passangers >= 50)
+                {
+                    _vagons.Add(new Vagon("|__B__|", 50));
+                    passangers -= _vagons[_vagons.Count -1].MaxPlace;
+                }
+                else if (passangers >= 25 && passangers<= 50)
+                {
+                    _vagons.Add(new Vagon("|_С_|",25));
+                    passangers -= _vagons[_vagons.Count - 1].MaxPlace; ;
+                }
+                else
+                {
+                    _vagons.Add(new Vagon("|М|", 10));
+                    passangers -= _vagons[_vagons.Count - 1].MaxPlace;
+                }
+            }
+        }
+        public void ShowTrainInfo()
+        {
+            Console.Write($"{_startStation} - {_endStation} ");
+            for (int i = 0; i <_vagons.Count; i++)
+            {
+                Console.Write(_vagons[i].Name);
+            }
+            Console.WriteLine();
+        }
+    }
+    class Vagon
+    {
+        public int MaxPlace { get; private set; }
+        public string Name { get; private set; }
+        public Vagon(string name, int maxPlace)
+        {
+            Name = name;
+            MaxPlace = maxPlace;
+        }
+    }
+}
