@@ -1,0 +1,137 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SuperMarket
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Queue<Buyer> buyers = new Queue<Buyer>();
+            Random buyerMoney = new Random();
+            bool payment;
+            Console.WriteLine("Добро пожаловать в наш супермаркет.");
+            for (int i = 0; i <= 10; i++)
+            {
+                buyers.Enqueue(new Buyer(buyerMoney.Next(1000,3000)));
+            }
+            while(buyers.Count > 0)
+            {
+                buyers.Peek().TakeProductInCart();
+                Console.WriteLine("У этого покупателя - " + buyers.Peek().Money + " денег.");
+                buyers.Peek().ShowSumProduct();
+                buyers.Peek().Pay(out payment);
+                Console.ReadKey();
+                while (payment != true)
+                { 
+                    buyers.Peek().DeleteProductInCart();
+                    buyers.Peek().Pay(out payment);
+                    Console.ReadKey();
+                }
+                buyers.Dequeue();
+
+                Console.ReadKey();
+                Console.Clear();
+            }
+            Console.WriteLine("Все покупатели расчитаны, супермаркет закрывается.");
+            Console.ReadKey();
+            
+        }
+    }
+
+    class Buyer
+    {
+        private Cart _cart = new Cart();
+        public int Money { get; private set; }
+        public Buyer(int money)
+        {
+            Money = money;
+        }
+        public void ShowSumProduct()
+        {
+            _cart.ShowListProduct();
+            Console.WriteLine($"В тележке продуктов на сумму {_cart.SumProduct} рублей.");
+        }
+        public void TakeProductInCart()
+        {
+            _cart = new Cart();
+            _cart.AddProduct();
+        }
+        public void DeleteProductInCart()
+        {
+            _cart.DeleteProduct();
+        }
+        public void Pay(out bool payment)
+        {
+            if (Money >= _cart.SumProduct)
+            {
+                payment = true;
+                Console.WriteLine("Поздравляем, вы приобрели товары в нашем супермаркете, до новых встреч.");
+                Money -= _cart.SumProduct;
+            }
+            else
+            {
+                payment = false;
+                Console.WriteLine("У вас нехватает средств для покупки всего.");
+                _cart.DeleteProduct();
+            }
+        }
+
+    }
+    class Cart
+    {
+        private Product _product;
+        private List<Product> _products = new List<Product>();
+        private Random _randomPrice = new Random();
+        private Random _randomProduct = new Random();
+        private Random _randomCountProduct = new Random();
+        private int _countProduct;
+        public int SumProduct { get; private set; }
+        public void AddProduct()
+        {
+            _countProduct = _randomCountProduct.Next(1, 15);
+            for (int i = 0; i < _countProduct; i++)
+            {
+                _product = new Product(_randomProduct.Next(0, 11), _randomPrice.Next(10, 500));
+                _products.Add(_product);
+                SumProduct += _products[i].Price;
+            }
+        }
+        public void DeleteProduct()
+        {
+            int deleteIndex =_randomProduct.Next(0, _products.Count);
+            _product = _products[deleteIndex];
+            SumProduct -= _product.Price;
+            Console.Write("Из вашей тележки убрано: ");
+            _product.ShowInfo();
+            _products.RemoveAt(deleteIndex);
+
+        }
+        public void ShowListProduct()
+        {
+            foreach (var product in _products)
+            {
+                product.ShowInfo();
+            }
+        }
+    }
+    class Product
+    {
+        public string Name { get; private set; }
+        private string[] _name = { "Колбаса", "Сыр", "Хлеб", "Молоко", "Печенье", "Мыло", "Шампунь", "Пельмени", "Шоколад", "Сок", "Бананы" };
+        public int Price { get; private set; }
+        public Product(int randomIndex, int price)
+        {
+            Name = _name[randomIndex];
+            Price = price;
+        }
+        public void ShowInfo()
+        {
+            Console.WriteLine($"{Name} - {Price}");
+        }
+            
+    }
+}
